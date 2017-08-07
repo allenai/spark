@@ -52,7 +52,7 @@ private[spark] class LiveListenerBus(val sparkContext: SparkContext) extends Spa
     queueSize
   }
 
-  private val slowQueueThresholdMs = sparkContext.conf
+  private lazy val slowQueueThresholdMs: Int = sparkContext.conf
       .get(LISTENER_BUS_EVENT_QUEUE_SLOW_THRESHOLD_MS)
 
   // Indicate if `start()` is called

@@ -157,7 +157,7 @@ package object config {
       .createWithDefault(10000)
 
   private[spark] val LISTENER_BUS_EVENT_QUEUE_SLOW_THRESHOLD_MS =
-      ConfigBuilder("spark.scheduler.listenerbus.eventqueue.slowThresholdMs")
+    ConfigBuilder("spark.scheduler.listenerbus.eventqueue.slowThresholdMs")
       .intConf
       .createWithDefault(10)
 
