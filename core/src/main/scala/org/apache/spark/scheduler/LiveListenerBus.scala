@@ -123,12 +123,11 @@ private[spark] class LiveListenerBus(val sparkContext: SparkContext) extends Spa
     }
     val putStart = System.nanoTime()
     eventQueue.put(event)
-    val putElapsed = System.nanoTime() - putStart
+    val putElapsedMs = (System.nanoTime() - putStart).toFloat / 1000000f
     eventLock.release()
 
-    if (putElapsed > slowQueueThresholdMs) {
-      logWarning("Slow event queue uptake: Took %.3fms to post to event queue."
-          .format(putElapsed / 1000000f))
+    if (putElapsedMs > slowQueueThresholdMs) {
+      logWarning(s"Slow event queue uptake: Took ${putElapsedMs}ms to post to event queue.")
     }
   }
 
