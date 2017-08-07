@@ -1,6 +1,12 @@
-# AI2 fork of apache spark
+# AI2 fork of apache spark v2.2.0
 
-View the differences with spark main
+View the differences with spark main.
+
+    git diff v2.2.0
+
+Publish a new snapshot.
+
+    sbt publish
 
 ----
 
