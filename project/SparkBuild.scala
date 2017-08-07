@@ -216,7 +216,8 @@ object SparkBuild extends PomBuild {
     resolvers := Seq(
       DefaultMavenRepository,
       Resolver.mavenLocal,
-      Resolver.file("local", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
+      Resolver.file("local", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns),
+      "ai2-packages maven2 snapshots" at "s3://ai2-packages/maven2/snapshots"
     ),
     externalResolvers := resolvers.value,
     otherResolvers := SbtPomKeys.mvnLocalRepository(dotM2 => Seq(Resolver.file("dotM2", dotM2))).value,
@@ -225,6 +226,8 @@ object SparkBuild extends PomBuild {
     publishMavenStyle in MavenCompile := true,
     publishLocal in MavenCompile := publishTask(publishLocalConfiguration in MavenCompile, deliverLocal).value,
     publishLocalBoth := Seq(publishLocal in MavenCompile, publishLocal).dependOn.value,
+
+    publishTo := Some("ai2-packages maven2 snapshots" at "s3://ai2-packages/maven2/snapshots"),
 
     javacOptions in (Compile, doc) ++= {
       val versionParts = System.getProperty("java.version").split("[+.\\-]+", 3)

@@ -156,6 +156,11 @@ package object config {
       .intConf
       .createWithDefault(10000)
 
+  private[spark] val LISTENER_BUS_EVENT_QUEUE_SLOW_THRESHOLD_MS =
+      ConfigBuilder("spark.scheduler.listenerbus.eventqueue.slowThresholdMs")
+      .intConf
+      .createWithDefault(10)
+
   // This property sets the root namespace for metrics reporting
   private[spark] val METRICS_NAMESPACE = ConfigBuilder("spark.metrics.namespace")
     .stringConf
