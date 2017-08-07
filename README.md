@@ -6,7 +6,7 @@ View the differences with spark main.
 
 Publish a new snapshot.
 
-    sbt publish
+    SBT_MAVEN_PROFILES=yarn sbt publish
 
 ----
 
