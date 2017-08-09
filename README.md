@@ -4,9 +4,30 @@ View the differences with spark main.
 
     git diff v2.2.0
 
-Publish a new snapshot.
+Publish a new snapshot to S3.
 
     SBT_MAVEN_PROFILES=yarn sbt publish
+
+Then also publish this to bintray. If you figure out sbt-bintray, replace these instructions.
+Fill in the bintray creds.
+
+    bintray_user=jasond@allenai
+    bintray_apikey=<API_KEY>
+    version=2.2.0-ai2-SNAPSHOT
+    
+    aws s3 sync s3://ai2-packages/maven2/snapshots/org/apache/spark /tmp/spark
+    
+    upload_base="https://api.bintray.com/content/allenai/private/org.apache.spark/$version"
+    curl_creds="-u${bintray_user}:${bintray_apikey}"
+    cd /tmp/spark
+    find . -type f | cut -c3- | gxargs -n 1 -I{} \
+      echo "echo {} ; curl -s -T {} $curl_creds $upload_base/org/apache/spark/{} > /dev/null" \
+      > /tmp/copy-to-bintray-script
+    bash /tmp/copy-to-bintray-script
+    rm /tmp/copy-to-bintray-script
+
+Then go into bintray and publish the files to the version.
+https://bintray.com/allenai/private/org.apache.spark/2.2.0-ai2-SNAPSHOT
 
 ----
 
